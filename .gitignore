@@ -1,0 +1,92 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+.claude/
+.vscode/
+.agents/
+.gemini/
+.claudecode/
+.opencode/
+
+# Environment variables
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+*.env
+!.env.example
+!.env.*.example
+
+# Build Outputs
+dist/
+build/
+out/
+.next/
+
+# NestJS / Backend Specific
+backend/dist/
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Next.js Specific
+frontend/.next/
+frontend/out/
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+.vitest/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS & Temp files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+*.temp
+
+# IDE & Editor files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# Turbo / Cache
+.turbo/
+.cache/
+.eslintcache
+.stylelintcache
+tsconfig.tsbuildinfo
+next-env.d.ts
+.env

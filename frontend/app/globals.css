@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@config "../tailwind.config.ts";
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --sidebar-width: var(--sidebar-width);
+}
+
+:root {
+  --color-primary: #6B38D4;
+  --sidebar-width: 240px;
+  
+  --bg-base: #F9F9FF;
+  --text-base: #151C27;
+}
+
+.dark {
+  --bg-base: #111827;
+  --text-base: #F9FAFB;
+}
+
+[data-color="amber"] { --color-primary: #D97706; }
+[data-color="blue"] { --color-primary: #2563EB; }
+[data-color="pink"] { --color-primary: #DB2777; }
+[data-color="rose"] { --color-primary: #E11D48; }
+[data-color="emerald"] { --color-primary: #059669; }
+[data-color="black"] { --color-primary: #1F2937; }
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-base);
+}
