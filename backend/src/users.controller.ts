@@ -4,6 +4,11 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { mkdirSync } from 'fs';
+
+// /tmp is the only writable directory in Vercel serverless functions
+const UPLOAD_DIR = process.env.UPLOAD_DEST ?? '/tmp/uploads';
+try { mkdirSync(UPLOAD_DIR, { recursive: true }); } catch (_) {}
 
 @Controller('users')
 @UseGuards(JwtAuthGuard)
@@ -28,7 +33,7 @@ export class UsersController {
   @Post('me/avatar')
   @UseInterceptors(FileInterceptor('file', {
     storage: diskStorage({
-      destination: './uploads',
+      destination: UPLOAD_DIR,
       filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
         cb(null, `${uniqueSuffix}${extname(file.originalname)}`);
