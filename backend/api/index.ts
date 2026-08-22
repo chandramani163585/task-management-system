@@ -1,14 +1,26 @@
+import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { ExpressAdapter } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
+import { AppModule } from '../src/app.module';
+import express from 'express';
+import { IncomingMessage, ServerResponse } from 'http';
+
+const server = express();
+
+let isAppInitialized = false;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  if (isAppInitialized) return;
+
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server), {
+    logger: ['error', 'warn'],
+  });
 
   app.setGlobalPrefix('api');
-  
+
   app.enableCors({
     origin: [
       'http://localhost:3000',
@@ -27,7 +39,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  
+
   app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()
@@ -39,6 +51,14 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  await app.listen(process.env.PORT ?? 3001);
+  await app.init();
+  isAppInitialized = true;
 }
-bootstrap();
+
+export default async function handler(
+  req: IncomingMessage,
+  res: ServerResponse,
+) {
+  await bootstrap();
+  server(req, res);
+}
