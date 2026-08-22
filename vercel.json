@@ -9,7 +9,12 @@
       "src": "backend/api/index.ts",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["backend/src/**", "backend/tsconfig.json", "backend/tsconfig.build.json"]
+        "includeFiles": [
+          "backend/src/**",
+          "backend/tsconfig.json",
+          "backend/tsconfig.build.json",
+          "backend/nest-cli.json"
+        ]
       }
     }
   ],
